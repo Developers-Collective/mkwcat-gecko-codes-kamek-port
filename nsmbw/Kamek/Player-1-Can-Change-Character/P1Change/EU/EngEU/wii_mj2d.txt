@@ -1,0 +1,687 @@
+#BMG  <<<  The first 4 characters '#BMG' are the magic for a BMG text file.
+#     <<<  Don't remove them!
+#
+# Details about BMG text files are available in the Web:
+#  * Syntax and Semantics: https://szs.wiimm.de/doc/bmg/text
+#  * The BMG file format:  https://szs.wiimm.de/r/wiki/BMG
+#
+#
+#------------------------------------------------------------------------------
+# All parameters begin with '@'. Unknown parameters are ignored on scanning.
+
+# Define encoding of BMG: 1=CP1252, 2=UTF-16/be, 3=Shift-JIS, 4=UTF-8
+@ENCODING = 2
+
+# Create »MID1« section: 0:off, 1=on
+@BMG-MID = 1
+
+# Size of each element of section 'INF1' (MKW=8).
+# This setting has impact to attributes and MKW features.
+@INF-SIZE = 0x08
+
+# Default attribute values for this BMG (MKW=[1])
+@DEFAULT-ATTRIBS = [,64,2]
+
+# Use MKW specific color names: 0=off, 1=auto, 2=on
+@COLOR-NAMES = 1
+
+# Use MKW messages and track names: 0=off, 1=auto, 2=on
+@MKW-MESSAGES = 1
+
+#
+#------------------------------------------------------------------------------
+
+# This part define values for unknown parameters of section headers.
+@UNKNOWN-INF32-0C =          0	# 32 bit value of section INF1 offset 0x0c
+@UNKNOWN-MID16-0A =     0x1001	# 16 bit value of section MID1 offset 0x0a
+@UNKNOWN-MID32-0C =          0	# 32 bit value of section MID1 offset 0x0c
+
+#
+#------------------------------------------------------------------------------
+
+     0	= test1
+     1 [,64,1] = (
+     2 [,64,1] = "
+     3 [,64,1] = '
+     4 [,64,1] = #
+     5 [,64,1] = !
+     6 [,64,1] = $
+     7 [,64,1] = %
+     8 [,64,1] = &
+     9 [,64,1] = )
+     a [,64,1] = *
+     b [,64,1] = +
+     c [,64,1] = ,
+     d [,64,1] = -
+     e [,64,1] = .
+     f [,64,1] = /
+    10 [,64,1] = 0
+    11 [,64,1] = 1
+    12 [,64,1] = 2
+    13 [,64,1] = 3
+    14 [,64,1] = 4
+    15 [,64,1] = 5
+    16 [,64,1] = 6
+    17 [,64,1] = 7
+    18 [,64,1] = 8
+    19 [,64,1] = 9
+    1a [,64,1] = :
+    1b [,64,1] = ;
+    1c [,64,1] = <
+    1d [,64,1] = =
+    1e [,64,1] = >
+    1f [,64,1] = ?
+    20 [,64,1] = @
+    21 [,64,1] = A
+    22 [,64,1] = B
+    23	= Watch Ending
+    24	= Yes, I'm sure
+    25	= No, wait!
+    26	= OK, I'll try it!
+    27	= No, skip it
+    28	= OK!
+    29	= Cancel
+    2a	= Save
+    2b	= Don't Save
+    2c	= OK!
+    2d	= Quick Save
+    2e	= Now that you cleared this\n
+	+ course with Super Guide,\n
+	+ do you want to give it\n
+	+ another try without?
+    2f	= Progress saved. You will now\n
+	+ return to the title screen.\n
+	+ \n
+	+ Now you can save at any\n
+	+ time from the Map Menu.
+    30	= All of the Toad houses have\n
+	+ popped back up!\n
+	+ \n
+	+ Don't be afraid to use items\n
+	+ you win at Toad houses to\n
+	+ get through tough courses!
+    31	= Press \u{20100} on the map to\n
+	+ access your items! Don't\n
+	+ be afraid to use items to\n
+	+ clear a tough course.
+    32	= New SUPER MARIO BROS. Wii\n
+	+ save data has been created.
+    33	= Save?
+    34	= Progress saved.
+    35	= Are you sure you want to\n
+	+ exit Free Mode and return\n
+	+ to the File Selection Screen?
+    36	= Watch this Hint Movie?
+    37	= Are you sure you want to\n
+	+ skip this course and move\n
+	+ on to the next one?
+    38	= Are you sure you want to\n
+	+ skip past the final challenge\n
+	+ and see the ending?
+    39	= Are you sure you want to\n
+	+ exit Coin Battle and return\n
+	+ to the File Selection Screen?
+    3a	= You got all the Star Coins in \n
+	+ World \u{0}!
+    3b	= You got all the Star Coins in \n
+	+ World \u{0}!\n
+	+ \n
+	+ You can now play a new\n
+	+ course in World 9!
+    3c	= I ordered my minions to\n
+	+ stuff every annoying Toad\n
+	+ they catch into a \z{601,12}. Hah!\n
+	+ If you wanna save 'em, come\n
+	+ alone. You can't get any help\n
+	+ from your friends! -- Bowser Jr.
+    3d	= Are you sure you want to\n
+	+ return to the title screen?\n
+	+ You will lose all your\n
+	+ unsaved progress.
+    3e	= Once your annoying friends\n
+	+ aren't around, my minions will\n
+	+ stuff every Toad they catch\n
+	+ into a \z{601,12}! If you wanna save\n
+	+ them, you'll have to do it\n
+	+ alone. HAH! -- Bowser Jr.
+    3f	= Are you sure you want to\n
+	+ exit and go back to the map?
+    40	= Are you sure you want to\n
+	+ go back to the course\n
+	+ selection screen?
+    41	= You got all the Star Coins in \n
+	+ World \u{0}!\n
+	+ \n
+	+ You've now collected all the\n
+	+ Star Coins in every world!
+    42	= Quit and go back to the\n
+	+ title screen?\n
+	+ \n
+	+ Your progress will be saved,\n
+	+ but you can only continue\n
+	+ from this quick save once.
+    43	= Progress saved.\n
+	+ \n
+	+ Returning to the title screen.
+    44	= You've completed everything in\n
+	+ New SUPER MARIO BROS. Wii!
+    45	= Are you sure you want to\n
+	+ exit and go back to the map?
+    46	= Here's a chance to win\n
+	+ some 1-Ups! Go through\n
+	+ the door to play.
+    47	= Feeling lucky? Go through\n
+	+ the door to try and win\n
+	+ some items!
+    48	= I found this rare item\n
+	+ for you! Did I do good?\n
+	+ I hope it helps!
+    49	= Hit the block to see\n
+	+ Hint Movies! Head left\n
+	+ when you want to leave.
+    4a	= Collect all the Star Coins\n
+	+ in World \u{0} to unlock\n
+	+ this course!
+    4b	= Mario! BAD NEWS! This\n
+	+ letter just got dropped\n
+	+ off at the castle...
+    4c	= I'm worried about them...\n
+	+ If you find a Toad, carry\n
+	+ him to the goal!
+    4d	= Thanks for rescuing me\n
+	+ earlier! Go through the\n
+	+ door for a chance to win!
+    4e	= Thanks for rescuing me\n
+	+ earlier! Go through the\n
+	+ door for a chance to win!
+    4f	= Thanks for rescuing me\n
+	+ earlier! Here's a present\n
+	+ for you!
+    50	= Every \u{130000} has turned into\n
+	+ a \u{130100} on courses.\n
+	+ Now you might be able to\n
+	+ get to places you couldn't\n
+	+ reach before.
+    51	= Every \u{130100} has turned into\n
+	+ a \u{130000} on courses.
+    52	= Don't forget to stop by\n
+	+ Peach's Castle once in a while\n
+	+ to watch Hint Movies. More\n
+	+ of them will unlock as you\n
+	+ continue your adventure!
+    53	= Spend your Star Coins at\n
+	+ Peach's Castle in World 1 to\n
+	+ watch Hint Movies. More Hint\n
+	+ Movies will unlock as you\n
+	+ continue your adventure, so\n
+	+ stop by every once in a while!
+    5a	= \u{20100}
+   100	= Continue
+   101	= Exit
+   102 [,1e,3] = \z{601,d}
+   10a [,5a,2] = Activate Super Guide?\n
+	+ \n
+	+ You'll call in Luigi to show\n
+	+ you how to play through\n
+	+ the course.
+   10b	= OK!
+   10c	= Cancel
+   10d [,1e,3] = \z{601,d}
+   10e [,5a,2] = Stop Super Guide and\n
+	+ start playing?
+   10f	= OK!
+   110	= Cancel
+   111 [,1e,3] = \z{601,d}
+   112 [,1e,3] = \z{601,d}
+   113 [,5f,2] = \u{80100} Exit
+   114 [,2f] = Super Guide
+   115	= Stop playing this Hint Movie?
+   116	= No
+   117	= Yes
+   201 [,1e,3] = \z{601,d}
+   202	= Star Coins
+   203	= Add/Drop Players
+   204	= Save
+   205	= Title Screen
+   206 [,5a,2] = Back \u{20100}
+   207	= Quick Save
+   20a [,55,1] = \u{20000}
+   20b [,55,2] = Add Wii Remote \u{80100}
+   20c [,3c] = x
+   20d [,55,1] = \u{20100}
+   20e [,5a,2] = OK \u{20000}
+   20f [,50,2] = Join
+   210 [,46] = Add Wii Remote
+   211	= Press \u{a0000} and \u{a0100} together
+   212	= OK \u{80100}
+   213 [,50,2] = Drop
+   214 [,50,2] = OK
+   215 [,1e,3] = \z{601,d}
+   216 [,1e,3] = \z{601,d}
+   217 [,1e,3] = \z{601,d}
+   218 [,1e,3] = \z{601,d}
+   219	= Start Game
+   21a	= Back
+   21b [,46] = Add/Drop Players
+   21c [,46] = \z{8ff,10082}\z{601,11}\z{8ff,1004d} Players
+   21d [,55,2] = Back \u{20100}
+   21e [,46] = Items
+   21f [,1e,3] = \z{601,d}
+   220 [,1e,3] = \z{601,d}
+   221 [,1e,3] = \z{601,d}
+   222 [,1e,3] = \z{601,d}
+   223 [,1e,3] = \z{601,d}
+   224 [,1e,3] = \z{601,d}
+   225 [,1e,3] = \z{601,d}
+   226 [,1e,3] = \z{601,d}
+   227 [,1e,3] = \z{601,d}
+   228 [,1e,3] = \z{601,d}
+   229 [,1e,3] = \z{601,d}
+   22a [,1e,3] = \z{601,d}
+   22b [,1e,3] = \z{601,d}
+   22c [,1e,3] = \z{601,d}
+   22d [,1e,3] = \z{601,d}
+   22e [,37] = x
+   22f [,55,2] = Back \u{20100} / \u{20000} Use
+   232 [,1e,3] = \z{601,d}
+   233 [,1e,3] = \z{601,d}
+   234 [,1e,3] = \z{601,d}
+   235 [,37] = \z{601,1}
+   236 [,50] = \u{50100}
+   237 [,50] = \u{50000}
+   238 [,50] = \u{50200}
+   239 [,50] = \u{50400}
+   23a [,55,2] = Back \u{20100}
+   23b [,50] = \u{50c00}
+   23c [,3c] = \u{90000}World \u{0,90100}
+   23d [,46] = Star Coins
+   23e [,32] = -
+   23f [,37] = \u{0}
+   250 [,46] = World
+   251 [,50] = \u{0}
+   252 [,50] = \z{601,1}
+   253 [,78] = \u{50000}
+   254 [,78] = \u{50100}
+   255 [,78] = \u{50200}
+   256 [,78] = \u{50300}
+   257 [,78] = \u{50400}
+   258 [,78] = \u{50500}
+   25a [,78] = \u{50900}
+   25b [,78] = \u{50a00}
+   25c [,78] = \u{50b00}
+   25d [,78] = \u{50c00}
+   25e [,78] = \u{50d00}
+   25f [,78] = \u{50e00}
+   260 [,46] = -
+   261 [,1e,3] = \z{601,d}
+   262 [,3c] = Free Mode
+   263 [,46] = \z{8ff,10082}\z{601,11}\z{8ff,1004d} Player
+   300 [,46] = Select a World
+   301 [,5a,2] = Back \u{20100}
+   302 [,1e,3] = \z{601,d}
+   303 [,1e,3] = \z{601,d}
+   304 [,1e,3] = \z{601,d}
+   305 [,1e,3] = \z{601,d}
+   306 [,1e,3] = \z{601,d}
+   307 [,1e,3] = \z{601,d}
+   308 [,1e,3] = \z{601,d}
+   309 [,1e,3] = \z{601,d}
+   30a [,1e,3] = \z{601,d}
+   30b [,1e,3] = \z{601,d}
+   30c [,5a,2] = Select
+   30d [,1e,3] = \z{601,d}
+   30e [,37] = World
+   400 [,1e,3] = \z{601,d}
+   40a [,55,2] = \u{70000} View Map
+   40b [,55,2] = Select World \u{70100}
+   40c [,55,2] = Menu \u{70200}
+   40d [,1e,3] = \z{601,d}
+   40e [,55,2] = \u{70000} Back to Mario
+   40f [,55,2] = Items \u{70300}
+   414 [,1e,3] = \z{601,d}
+   415 [,1e,3] = \z{601,d}
+   416 [,1e,3] = \z{601,d}
+   417 [,1e,3] = \z{601,d}
+   426 [,6e,1] = \u{50d00}
+   427 [,6e,1] = \u{50e00}
+   428 [,6e,1] = \u{50900}
+   429 [,6e,1] = \u{50a00}
+   42a [,6e,1] = \u{50b00}
+   42b [,6e,1] = \u{50c00}
+   432 [,41] = \z{601,1}
+   433 [,6e,1] = \u{50100}
+   434 [,6e,1] = \u{50000}
+   435 [,6e,1] = \u{50200}
+   436 [,6e,1] = \u{50500}
+   437 [,6e,1] = \u{50600}
+   438 [,6e,1] = \u{50700}
+   439 [,6e,1] = \u{50300}
+   43a [,6e,1] = \u{50800}
+   43b [,6e,1] = \u{50400}
+   43c [,37] = World
+   43d [,41] = \u{0}
+   43e [,41] = -
+   500 [,1e,3] = \z{601,d}
+   501 [,1e,3] = \z{601,d}
+   502 [,1e,3] = \z{601,d}
+   600 [,32] = Continues Used:
+   601 [,5a,2] = 
+   602 [,37] = x
+  3200 [,37] = Press \u{20000} to Start
+  3201 [,5a,2] = Copy \u{80100}
+  3202	= Cancel
+  3203 [,5a,2] = \u{80200} Erase
+  3204	= OK!
+  3205	= Choose a file to copy.
+  3206	= Choose a file to erase.
+  3207	= Copy over which file?
+  3208	= Erase this file?
+  3209	= Overwrite this file?
+  320a	= The file has been erased.
+  320b	= The file has been copied.
+  320c [,41] = File Selection
+  320d	= Erasing file...
+  320e	= Copying file...
+  320f [,32] = World
+  3210 [,3c] = Free Mode
+  3211 [,50] = NEW!!
+  3212 [,37] = x
+  3213 [,3c] = Coin Battle
+  3214 [,1e,3] = \z{601,d}
+  3215 [,1e,3] = \z{601,d}
+  3216 [,1e,3] = \z{601,d}
+  3217	= Continue
+  3218	= Title Screen
+  3219 [,1e,3] = \z{601,d}
+  321a [,1e,3] = \z{601,d}
+  321b [,41] = \u{90000}Favourites\u{90100}
+  321c [,41] = \u{90000}Recommended Courses\u{90100}
+  321d [,41] = \u{90000} World \z{8ff,10078}\u{0,90100}
+  321e [,1e,3] = \z{601,d}
+  321f [,1e,3] = \z{601,d}
+  3220 [,1e,3] = \z{601,d}
+  3221 [,1e,3] = \z{601,d}
+  3228 [,3c] = \u{0}
+  3229 [,3c] = -
+  322a [,3c] = \z{601,1}
+  322b [,5a,1] = \u{50100}
+  322c [,5a,1] = \u{50000}
+  322d [,5a,1] = \u{50200}
+  322e [,5a,1] = \u{50400}
+  322f [,5a,1] = \u{50c00}
+  3232 [,3c] = CLEAR!
+  3233 [,3c] = TEAM\n
+	+ FINISH!
+  323c [,55,2] = Exit Free Mode \u{20100}
+  323d [,55,2] = Exit Coin Battle \u{20100}
+  6400 [,1e,3] = \z{601,d}
+  6500 [,6e] = 1
+  6501 [,6e] = 2
+  6502 [,6e] = 3
+  6503 [,6e] = 4
+  6504 [,3c] = st
+  6505 [,3c] = nd
+  6506 [,3c] = rd
+  6507 [,3c] = th
+  6508 [,28] = SCORE
+  6509 [,28] = COINS
+  650a [,28] = ENEMIES
+  650b [,1e,3] = \z{601,d}
+  650c [,1e,3] = \z{601,d}
+  650d [,37] = x
+  650e [,1e,3] = \z{601,d}
+  650f [,1e,3] = \z{601,d}
+  6510 [,1e,3] = \z{601,d}
+  6511 [,1e,3] = \z{601,d}
+  6512 [,64] = RANKING
+  6513 [,41] = SCORES
+  6514 [,41] = LIVES LEFT
+  6515 [,41] = FINAL RESULTS
+  6516 [,1e,3] = \z{601,d}
+  6517 [,1e,3] = 1000
+  6532 [,28] = Score
+  6533 [,28] = Coins
+  6534 [,28] = Enemies
+  6535 [,37] = x
+  6536 [,41] = SCORES
+  6600 [,1e,3] = \z{601,d}
+  6601 [,1e,3] = \z{601,d}
+  6602 [,1e,3] = \z{601,d}
+  6603 [,1e,3] = \z{601,d}
+  6604 [,1e,3] = \z{601,d}
+  6605 [,1e,3] = \z{601,d}
+  6606 [,1e,3] = \z{601,d}
+  6607 [,1e,3] = \z{601,d}
+  6608 [,1e,3] = \z{601,d}
+  6609 [,1e,3] = \z{601,d}
+  660a [,1e,3] = \z{601,d}
+  660b [,1e,3] = \z{601,d}
+  660c [,1e,3] = \z{601,d}
+  660d [,1e,3] = \z{601,d}
+  660e [,1e,3] = \z{601,d}
+  660f [,1e,3] = \z{601,d}
+  6613 [,78] = EVERYONE LOST!
+  6614 [,78] = COURSE CLEAR!
+  6615 [,64] = TIME'S UP!
+  6616 [,78] = GAME OVER!
+  6617 [,6e,1] = \u{50900}
+  6618 [,6e,1] = \u{50a00}
+  6619 [,6e,1] = \u{50b00}
+  661a [,6e,1] = \u{50c00}
+  661b [,6e,1] = \u{50d00}
+  661c [,6e,1] = \u{50e00}
+  661d [,78,1] = 
+  661e [,78,1] = 
+  661f [,3c] = World
+  6620 [,50] = \u{0}
+  6621 [,50] = \z{601,1}
+  6622 [,6e,1] = \u{50000}
+  6623 [,6e,1] = \u{50100}
+  6624 [,6e,1] = \u{50200}
+  6625 [,6e,1] = \u{50300}
+  6626 [,6e,1] = \u{50400}
+  6627 [,6e,1] = \u{50500}
+  6628 [,6e,1] = \u{50800}
+  6629 [,50] = -
+  662a [,46] = x
+  662d [,4b] = Starting Super Guide
+  662e [,1e,3] = \z{601,d}
+  6632 [,5a,2] = Wii Remote affected:
+  6633 [,32] = P1
+  6634 [,32] = P2
+  6635 [,32] = P3
+  6636 [,32] = P4
+  6700 [,27,3] = 100
+  6701 [,27,3] = 200
+  6702 [,27,3] = 400
+  6703 [,27,3] = 800
+  6704 [,27,3] = 1000
+  6705 [,27,3] = 2000
+  6706 [,27,3] = 4000
+  6707 [,27,3] = 8000
+  6708 [,32] = 1UP
+  6709 [,3c,3] = 1
+  670a [,3c,3] = 2
+  670b [,3c,3] = 3
+  670c [,3c,3] = 4
+  670d [,3c,3] = 5
+  670e [,3c,3] = 6
+  670f [,3c,3] = 7
+  6710 [,3c,3] = 8
+  6711 [,32] = 2UP
+  6712 [,32] = 3UP
+  6713 [,32] = 4UP
+  6732 [,32] = x
+  6733 [,3c] = 2
+  6734 [,3c] = 3
+  6735 [,3c] = 5
+  6736 [,3c] = 10
+  6737 [,3c] = 15
+  6738 [,3c] = 20
+  6739 [,32] = x
+  673a [,3c] = 1
+  673b [,3c] = 10
+  6800	= Controls changed to\n
+	+ Nunchuk style. Please\n
+	+ press \u{80300}.
+  6801	= Controls changed to\n
+	+ horizontal mode.\n
+	+ Please press \u{20000}.
+  6802 [,1e,3] = \z{601,d}
+  6803	= This extension controller\n
+	+ is not supported.\n
+	+ Please remove the\n
+	+ extension controller.
+  6804 [,46] = P1
+  6805 [,46] = P2
+  6806 [,46] = P3
+  6807 [,46] = P4
+  6808	= Hold the Wii Remote\n
+	+ sideways.
+  6809 [,5a,2] = \u{80500} Dash
+  680a [,5a,2] = \u{80400} Dash/Carry
+  680b [,5a,2] = \u{80300} Jump
+  6900 [,1e,3] = \z{601,d}
+  6901 [,1e,3] = \z{601,d}
+  6902 [,1e,3] = \z{601,d}
+  6a00 [,1e,3] = \z{601,d}
+  6a01 [,1e,3] = \z{601,d}
+  6a02 [,1e,3] = \z{601,d}
+  6a03 [,1e,3] = \z{601,d}
+  6a04 [,1e,3] = \z{601,d}
+  6a05 [,1e,3] = \z{601,d}
+  6a06 [,1e,3] = \z{601,d}
+  6b00 [,5a,2] = How many will play?
+  6b01 [,1e,3] = \z{601,d}
+  6b02 [,64] = 1
+  6b03 [,64] = 2
+  6b04 [,64] = 3
+  6b05 [,64] = 4
+  6c00 [,78] = 2
+  6c01 [,78] = 3
+  6c02 [,78] = 4
+  6c1e [,46] = Number of Players
+  c800	= Wii Remote battery charge\n
+	+ is running low.
+  c801 [,5a,2] = Wii Remotes affected:
+  c802 [,32] = P1
+  c803 [,32] = P2
+  c804 [,32] = P3
+  c805 [,32] = P4
+  c900	= Connection with the\n
+	+ Wii Remote was lost.\n
+	+ Please press a button.
+  c901 [,46] = P1
+  c902 [,46] = P2
+  c903 [,46] = P3
+  c904 [,46] = P4
+  c905 [,82,1] = \u{20000}
+ 12c00	= Hop into a cannon!\n
+	+ You only get one shot!
+ 12c01 [,5a,2] = Tilt to aim!
+ 12c02 [,5a,2] = \u{20000} to fire!
+ 12c03 [,46] = Results
+ 12c04 [,3c] = \u{e0000}-Up
+ 12c05 [,5a] = 1-Up Blast
+ 12c06 [,1e,3] = \z{601,d}
+ 12d00	= Press \u{20100} to punch a\n
+	+ panel and flip it.
+ 12d01 [,5a,2] = Match two of these\n
+	+ and it's all over!
+ 12d02 [,46] = You win!
+ 12d03 [,46] = x\u{e0100}
+ 12d04 [,5a] = Power-Up Panels
+ 12d05	= Punch panels with \u{20100} to flip them.
+ 12d06 [,5a,2] = Match a pair to win!
+ 12d07 [,46] = Too bad...\n
+	+ You didn't even\n
+	+ get one...
+ 12d08 [,50,2] = Your turn!
+ 12d09	= Press \u{20100} on the map!
+ 12e00 [,41] = Hint Movies
+ 12e01	= Endless 1-Ups
+ 12e02	= Secret Goal
+ 12e03	= Star Coin
+ 12e04	= Super Skills
+ 12e05 [,50] = ? ? ? ?
+ 12e06 [,3c] = x
+ 12e07	= Star Coins Required:
+ 12e08 [,4b] = x
+ 12e14 [,46] = \u{0}
+ 12e15 [,46] = -
+ 12e16 [,46] = \z{601,1}
+ 12e17 [,6e,1] = \u{50100}
+ 12e18 [,6e,1] = \u{50000}
+ 12e19 [,6e,1] = \u{50200}
+ 12e1a [,6e,1] = \u{50400}
+ 12e1b [,6e,1] = \u{50c00}
+ 12e1c [,3c] = World
+ 12f00 [,78] = THE END
+ 13000	= Today is Princess Peach's birthday...
+ 13100	= Oh, Mario, did I ever tell you\n
+	+ about that secret world...?
+ 13101 [,2d] = High Score
+ 13102	= Oh, Mario! Tell me all about\n
+	+ your big adventure again!
+ 19000 [,1e,3] = \z{601,d}
+ 1f400 [,1e,3] = \z{601,d}
+ 25800 [,1e,3] = \z{601,d}
+ 2bc00 [,1e,3] = \z{601,d}
+ 32000 [,1e,3] = \z{601,d}
+ 38400 [,1e,3] = \z{601,d}
+ 3e800 [,5a,2] = You can play for 10 minutes. After 10\n
+	+ minutes, the session will automatically end.
+ 3e80a [,41] = EVENT VERSION
+ 3e80b [,1e,3] = \z{601,d}
+ 3e80c [,50] = Thank you for playing!
+ 3e80d [,6e,2] = You can continue\n
+	+ your adventure\n
+	+ in the retail version!
+ 3e80e [,5a,2] = \z{601,c}, \z{601,c} \z{601,c}:\z{601,c}:\z{601,c}
+ 3e900 [,50,2] = ©2009 Nintendo\040
+15f9000	= Please insert the New SUPER\n
+	+ MARIO BROS. Wii Disc.
+15f9002	= The Disc could not\n
+	+ be read. Please refer to\n
+	+ the Wii Operations Manual\n
+	+ for details.
+15f9003 [,1e,3] = \z{601,d}
+15f9004	= There is not enough\n
+	+ available space in the\n
+	+ Wii System Memory. Create\n
+	+ \z{601,f} block of free space by\n
+	+ either moving data to an\n
+	+ SD Card or deleting data on\n
+	+ the Data Management\n
+	+ Screen.
+15f9005 [,1e,3] = \z{601,d}
+15f9006 [,5a,2] = Go to the Data\n
+	+ Management Screen
+15f9007	= There is not enough\n
+	+ available space in the\n
+	+ Wii System Memory. Either\n
+	+ move data to an SD Card\n
+	+ or delete data on the\n
+	+ Data Management Screen.
+15f9008	= The New SUPER MARIO BROS. Wii\n
+	+ file cannot be used because\n
+	+ the data is corrupted.
+15f9009	= Continue without saving/loading
+15f900a	= Delete file
+15f900b	= The Wii System Memory has\n
+	+ been damaged. Please refer\n
+	+ to the Wii Operations Manual\n
+	+ for details.
+15f900c	= An error occurred during the\n
+	+ process of reading from or\n
+	+ writing to the Wii System\n
+	+ Memory. Please refer to the\n
+	+ Wii Operations Manual for\n
+	+ details.
+15f900d	= Could not access the Wii\n
+	+ System Memory. Please\n
+	+ refer to the Wii Operations\n
+	+ Manual for details.
+15f9100	= Play Mario with your friends!
+15f9101	= New SUPER MARIO BROS. Wii
+

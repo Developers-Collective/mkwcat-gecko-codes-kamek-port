@@ -1,0 +1,7 @@
+/Build_*
+/*ASM
+/processed
+/tmp
+/tools/__pycache__
+/tools/cw
+/tools/devkitPPC

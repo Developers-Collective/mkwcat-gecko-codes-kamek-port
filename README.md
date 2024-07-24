@@ -14,9 +14,15 @@ Of course, credits goes to [mkwcat](https://github.com/mkwcat) for the Gecko Cod
 
 Kamek port by the [Developers Collective](https://github.com/developers-collective).
 
-Additional credits below.
+Additional credits [below](#credits-1).
 
 Make sure to credit everyone involved if you use these patches in your own mod!
+
+## Port-specific credits
+
+  * Player 1 Can Change Character:
+    
+	Flizl: Mario render for the Player Selection Screen
 
 # Gecko Code Collection
 

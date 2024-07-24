@@ -1,0 +1,5 @@
+output_dir: "Player1CanChangeCharacterASM"
+code_address: 0x808D9000
+defines: []
+modules:
+  - processed/Player1CanChangeCharacter.yaml
