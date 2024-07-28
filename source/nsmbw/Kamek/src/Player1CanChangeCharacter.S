@@ -22,6 +22,7 @@
 .extern returnFrom_IncreaseCourseInVolume # 0x8019AB90
 .extern returnFrom_WMStarPowerupSound # 0x807B077C
 .extern returnFrom_WMChangeP1Model_SaveReg # 0x80902ED8
+.extern returnFrom_DontSetP1PowerupToMario # 0x80903020
 .extern returnFrom_WMChangeP1Model # 0x80902F24
 .extern returnFrom_ChangePSELBmgForPlayerCount # 0x807A10CC
 .extern returnFrom_CancelAddDropCheckPlayer1 # 0x807A0D28
@@ -224,6 +225,13 @@ WMChangeP1Model_SaveReg:
     mflr    r0
     stw     r3, 0x8(r1)
 	b       returnFrom_WMChangeP1Model_SaveReg
+
+
+# Fix FUN_80902fa0
+
+.global DontSetP1PowerupToMario
+DontSetP1PowerupToMario:
+    b returnFrom_DontSetP1PowerupToMario
 
 
 # Set the player 1 model after changing characters

@@ -1850,6 +1850,7 @@ SECTIONS {
     returnFrom_IncreaseCourseInVolume = 2149166992;
     returnFrom_WMStarPowerupSound = 2155563084;
     returnFrom_WMChangeP1Model_SaveReg = 2156949800;
+    returnFrom_DontSetP1PowerupToMario = 2156950128;
     returnFrom_WMChangeP1Model = 2156949876;
     returnFrom_ChangePSELBmgForPlayerCount = 2155499980;
     returnFrom_CancelAddDropCheckPlayer1 = 2155499048;
