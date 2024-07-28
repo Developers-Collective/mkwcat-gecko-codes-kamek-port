@@ -1,0 +1,16 @@
+/Build_*
+/*ASM
+/processed
+/tmp
+/tools/__pycache__
+/tools/cw
+/tools/devkitPPC
+
+kamek_pal2.x
+kamek_ntsc.x
+kamek_ntsc2.x
+kamek_jpn.x
+kamek_jpn2.x
+kamek_kor.x
+kamek_twn.x
+kamek_chn.x

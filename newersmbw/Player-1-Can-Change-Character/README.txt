@@ -1,0 +1,1 @@
+Paste this patch over an unmodified copy of the NewerSMBW v1.3.0 riivolution patch.
