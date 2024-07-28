@@ -72,5 +72,6 @@ modules:
   - processed/pumpkinGoomba.yaml
   # - processed/pengi.yaml
 #  - processed/actorlog.yaml
+  - processed/player1CanChangeCharacter.yaml
   - processed/exceptionHandler.yaml
   - processed/actors.yaml

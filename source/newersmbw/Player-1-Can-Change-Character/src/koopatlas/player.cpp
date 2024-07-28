@@ -1,39 +1,25 @@
 #include "koopatlas/player.h"
 
 daWMPlayer_c *daWMPlayer_c::instance;
-static const char *mdlNames[] = {"MB_model", "SMB_model", "PLMB_model", "PMB_model"};
-static const char *patNames[] = {"PB_switch_swim", "PB_switch_swim", "PLMB_switch_swim", "PLB_switch_swim"};
+
+static const char *mdlNames[][4] = {
+	{"MB_model", "SMB_model", "PLMB_model", "PMB_model"},
+	{"LB_model", "SLB_model", "PLLB_model", "PLB_model"},
+	{"KB_model", "SKB_model", "PLKB_model", "PKB_model"},
+	{"KB_model", "SKB_model", "PLKB_model", "PKB_model"}
+};
+
+static const char *patNames[][4] = {
+	{"PB_switch_swim", "PB_switch_swim", "PLMB_switch_swim", "PLB_switch_swim"},
+	{"PB_switch_swim", "PB_switch_swim", "PLLB_switch_swim", "PLB_switch_swim"},
+	{"PB_switch_swim", "PB_switch_swim", "PLKB_switch_swim", "PLB_switch_swim"},
+	{"PB2_switch_swim", "PB2_switch_swim", "PLKB2_switch_swim", "PLB2_switch_swim"}
+};
 
 int daWMPlayer_c::onCreate() {
+	this->setupModel();
 
-	this->modelHandler = new dPlayerModelHandler_c(0);
-	// loadModel(u8 player_id, int powerup_id, int unk);
-	// Unk is some kind of mode: 0=in-game, 1=map, 2=2D
-
-	// Here we do a bit of a hack
-	//this->modelHandler->loadModel(0, 3, 1);
-	dPlayerModel_c *pm = (dPlayerModel_c*)modelHandler->mdlClass;
-
-	pm->mode_maybe = 1;
-	pm->player_id_1 = 0;
-	pm->allocator.link(0xC000, GameHeaps[0], 0, 0x20);
-	pm->prepare();
-
-	for (int i = 0; i < 4; i++) {
-		nw4r::g3d::ResMdl mdl = pm->modelResFile.GetResMdl(mdlNames[i]);
-		nw4r::g3d::ResAnmTexPat pat = pm->modelResFile.GetResAnmTexPat(patNames[i]);
-
-		pats[i].setup(mdl, pat, &pm->allocator, 0, 1);
-	}
-
-	pm->allocator.unlink();
-	pm->setPowerup(3);
-	pm->finaliseModel();
-
-	pm->startAnimation(0, 1.2, 10.0, 0.0);
-	modelHandler->setSRT((Vec){0.0,100.0,-100.0}, (S16Vec){0,0,0}, (Vec){2.0,2.0,2.0});
-
-	hammerSuit.setup(this->modelHandler);
+	this->startAnimation(0, 1.2, 10.0, 0.0);
 
 	pos = (Vec){0.0f,0.0f,3000.0f};
 	rot = (S16Vec){0x1800,0,0};
@@ -62,10 +48,15 @@ int daWMPlayer_c::onDelete() {
 
 
 int daWMPlayer_c::onExecute() {
-	if (Player_Flags[0] & 1) {
+	if (Player_Flags[Player_ID[0]] & 1 && visible) {
 		modelHandler->mdlClass->enableStarColours();
 		modelHandler->mdlClass->enableStarEffects();
 		dKPMusic::playStarMusic();
+	}
+	else {
+		modelHandler->mdlClass->disableStarColours();
+		modelHandler->mdlClass->disableStarEffects();
+		dKPMusic::stopStarMusic();
 	}
 
 	if (spinning)
@@ -123,6 +114,47 @@ int daWMPlayer_c::onDraw() {
 	return true;
 }
 
+void daWMPlayer_c::setupModel() {
+	int characterID = Player_ID[0];
+
+	this->modelHandler = new dPlayerModelHandler_c(characterID);
+	// loadModel(u8 player_id, int powerup_id, int unk);
+	// Unk is some kind of mode: 0=in-game, 1=map, 2=2D
+
+	// Here we do a bit of a hack
+	//this->modelHandler->loadModel(0, 3, 1);
+	dPlayerModel_c *pm = (dPlayerModel_c*)modelHandler->mdlClass;
+
+	pm->mode_maybe = 1;
+	pm->player_id_1 = characterID;
+	pm->allocator.link(0xC000, GameHeaps[0], 0, 0x20);
+	pm->prepare();
+
+	for (int i = 0; i < 4; i++) {
+		nw4r::g3d::ResMdl mdl = pm->modelResFile.GetResMdl(mdlNames[characterID][i]);
+		nw4r::g3d::ResAnmTexPat pat = pm->modelResFile.GetResAnmTexPat(patNames[characterID][i]);
+
+		pats[i].setup(mdl, pat, &pm->allocator, 0, 1);
+	}
+
+	pm->allocator.unlink();
+	pm->setPowerup(Player_Powerup[characterID]);
+	pm->finaliseModel();
+
+	modelHandler->setSRT((Vec){0.0,100.0,-100.0}, (S16Vec){0,0,0}, (Vec){2.0,2.0,2.0});
+
+	hammerSuit.setup(this->modelHandler);
+}
+
+void daWMPlayer_c::refreshPlayerModel() {
+	if(this->onDelete()) {
+		this->setupModel();
+
+		OSReport("Refresh: Setting anim to %d %f %f %f\n", currentAnim, currentFrame, currentUnk, currentUpdateRate);
+		this->modelHandler->mdlClass->startAnimation(currentAnim, currentFrame, currentUnk, currentUpdateRate);
+	}
+}
+
 
 void daWMPlayer_c::startAnimation(int id, float frame, float unk, float updateRate) {
 	if (id == currentAnim && frame == currentFrame && unk == currentUnk && updateRate == currentUpdateRate)
@@ -136,6 +168,8 @@ void daWMPlayer_c::startAnimation(int id, float frame, float unk, float updateRa
 	currentUnk = unk;
 	currentUpdateRate = updateRate;
 	this->modelHandler->mdlClass->startAnimation(id, frame, unk, updateRate);
+	
+	OSReport("Setting anim to %d %f %f %f\n", currentAnim, currentFrame, currentUnk, currentUpdateRate);
 
 	if (isOldSwimming != isNewSwimming)
 		bindPats();
@@ -150,7 +184,7 @@ void daWMPlayer_c::bindPats() {
 	if (currentAnim == swim_wait)
 		frame += (pm->powerup_id == 4 || pm->powerup_id == 5) ? 1.0f : 4.0f;
 
-	nw4r::g3d::ResAnmTexPat pat = pm->modelResFile.GetResAnmTexPat(patNames[id]);
+	nw4r::g3d::ResAnmTexPat pat = pm->modelResFile.GetResAnmTexPat(patNames[Player_ID[0]][id]);
 	pats[id].bindEntry(
 			&pm->models[id].body,
 			&pat,

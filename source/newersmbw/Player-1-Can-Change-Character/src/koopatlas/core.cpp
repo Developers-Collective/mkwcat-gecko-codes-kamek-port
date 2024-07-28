@@ -239,7 +239,7 @@ bool WMInit_SetupExtra(void *ptr) {
 	// need Player before we can set up paths
 	SpammyReport("creating player\n");
 	wm->player = (daWMPlayer_c*)CreateParentedObject(WM_PLAYER, wm, 0, 2);
-	wm->player->modelHandler->mdlClass->setPowerup(Player_Powerup[0]);
+	wm->player->modelHandler->mdlClass->setPowerup(Player_Powerup[Player_ID[0]]);
 	wm->player->bindPats();
 	wm->player->modelHandler->mdlClass->startAnimation(0, 1.2f, 10.0f, 0.0f);
 
@@ -586,6 +586,7 @@ void dScKoopatlas_c::executeState_CSMenu() {
 				case 1:
 					// Add/Drop Players
 					MapReport("Add/Drop Players was pressed\n");
+					player->visible = false;
 					state.setState(&StateID_PlayerChangeWait);
 					NPCHG_ACTIVE(this->numPeopleChange) = true;
 					WpadShit(10);
@@ -719,8 +720,11 @@ void dScKoopatlas_c::executeState_PlayerChangeWait() {
 				bool isThere = QueryPlayerAvailability(i);
 				int id = Player_ID[i];
 				Player_Active[i] = isThere ? 1 : 0;
-				if (!isThere) Player_Flags[i] = 0;
+				//if (!isThere) Player_Flags[i] = 0;
 			}
+
+			player->visible = true;
+			player->refreshPlayerModel();
 
 			state.setState(&StateID_Normal);
 			hud->unhideAll();
@@ -757,7 +761,7 @@ void dScKoopatlas_c::executeState_EasyPairingWait() {
 void dScKoopatlas_c::executeState_PowerupsWait() {
 
 	if (!stockItem->show) {
-		player->modelHandler->mdlClass->setPowerup(Player_Powerup[0]);
+		player->modelHandler->mdlClass->setPowerup(Player_Powerup[Player_ID[0]]);
 		player->bindPats();
 
 		state.setState(&StateID_Normal);

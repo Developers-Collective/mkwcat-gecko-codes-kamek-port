@@ -1,0 +1,593 @@
+---
+source_files: [../src/player1CanChangeCharacter.S]
+hooks:
+  - name: SkipConstructingBaseP1Model
+    type: patch
+    addr_pal: 0x809027F8
+    data: '3880FFFF' # li r4, 1
+
+  - name: SkipDestructingBaseP1Model
+    type: nop_insn
+    area_pal: 0x809028F8
+
+  - name: SkipLoadingSubplayers
+    type: nop_insn
+    area_pal: 0x809029A8
+
+  - name: CopySubplayerModelIntoP1Model
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902B7C
+    target_func: 'WMPlayerUseSubplayerModel'
+
+  - name: LoadMarioModelForWMSubplayer
+    type: patch
+    addr_pal: 0x80902BE8
+    data: '3BC00000' # li r30, 0
+
+  # Only call this thing with 1 on subplayers
+
+  - name: WMSubplayerFix01
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902D58
+    target_func: 'WMSubplayerFix01'
+  
+  - name: WMSubplayerFix02
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902D6C
+    target_func: 'WMSubplayerFix02'
+
+   # Fix some float thing in WM subplayer
+  
+  - name: WMSubplayerFixFloat
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902E14
+    target_func: 'WMSubplayerFixFloat'
+
+    # Pre-copy the status as well when loading in from the menu
+  
+  - name: WMSubplayerFixStatusOnLoad
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80909410
+    target_func: 'WMSubplayerFixStatusOnLoad'
+
+    # Fix wrong array used in WM subplayer load model function
+    # (This is a base game bug I guess)
+  
+  - name: FixWMSubplayerLoadModelArray1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x808EB7D8
+    target_func: 'FixWMSubplayerLoadModelArray1'
+  
+  - name: FixWMSubplayerLoadModelArray2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x808EB7E4
+    target_func: 'FixWMSubplayerLoadModelArray2'
+
+    #  Play voice on add if param 4 is 1 regardless
+
+  - name: FixVoiceOnAdd1
+    type: nop_insn
+    area_pal: 0x80902E78
+
+  - name: FixVoiceOnAdd2
+    type: patch
+    addr_pal: 0x80902E84
+    data: '9BBF0124' # stb r29, 0x124(r31)
+
+    # Change Mario's DECIDE_JOIN sound to one that actually exists
+
+  - name: ChangeMarioDecideJoinSFX
+    type: patch
+    addr_pal: 0x802F62C8
+    data: '00000347' # SE_VOC_MA_HUKKATSU
+
+    # Luigi's COURSE_IN
+
+  - name: ChangeLuigiCourseInSFX1
+    type: patch
+    addr_pal: 0x802F63D0
+    data: '0000036E' # SE_VOC_LU_CS_COURSE_IN_MULTI
+
+  - name: ChangeLuigiCourseInSFX2
+    type: patch
+    addr_pal: 0x802F63D8
+    data: '0000036E' # SE_VOC_LU_CS_COURSE_IN_MULTI
+
+    # Blue Toad's COURSE_IN
+
+  - name: ChangeLuigiCourseInSFX1
+    type: patch
+    addr_pal: 0x802F64EC
+    data: '000003B5' # SE_VOC_KO_CS_COURSE_IN_MULTI
+
+  - name: ChangeLuigiCourseInSFX2
+    type: patch
+    addr_pal: 0x802F64F4
+    data: '000003B5' # SE_VOC_KO_CS_COURSE_IN_MULTI
+
+    # Yellow Toad's COURSE_IN
+
+  - name: ChangeLuigiCourseInSFX1
+    type: patch
+    addr_pal: 0x802F6608
+    data: '000003FB' # SE_VOC_KO2_CS_COURSE_IN_MULTI
+
+  - name: ChangeLuigiCourseInSFX2
+    type: patch
+    addr_pal: 0x802F6610
+    data: '000003FB' # SE_VOC_KO2_CS_COURSE_IN_MULTI
+
+    # Make a PLAYER_DECIDE sound for every other player as well
+
+  - name: MakePlayerDecideSoundForEveryone
+    type: nop_insn
+    area_pal: 0x807A1C8C
+  
+  - name: PlayerDecideSound
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807A1C94
+    target_func: 'PlayerDecideSound'
+
+    # Save param 2 for following hook
+  
+  - name: IncreaseCourseInVolumeSaveParam2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8019AAB4
+    target_func: 'IncreaseCourseInVolumeSaveParam2'
+
+    # Increase volume of course in to adjust for the multiplayer sound being quieter
+  
+  - name: IncreaseCourseInVolume
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8019AB8C
+    target_func: 'IncreaseCourseInVolume'
+
+    # Fix the voice used when selecting a star on the powerup menu
+
+  - name: FixWMStarPowerupSound
+    type: nop_insn
+    area_pal: 0x807B0770
+
+  - name: WMStarPowerupSound
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807B0778
+    target_func: 'WMStarPowerupSound'
+
+    # Save WMPlayer class
+  
+  - name: WMChangeP1Model_SaveReg
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902ED4
+    target_func: 'WMChangeP1Model_SaveReg'
+
+    # Set the player 1 model after changing characters
+  
+  - name: WMChangeP1Model
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902F20
+    target_func: 'WMChangeP1Model'
+    
+    # Fix rotation of subplayers around player 1 on worldmap
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x808EE0D4
+    data: '38050000' # addi r0, r5, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x808EE0E0
+    data: '2C050000' # cmpwi r5, 0
+
+    # Fix FUN_80902ca0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80902D1C
+    data: '3B440000' # addi r26, r4, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80902D20
+    data: '3B3F0000' # addi r25, r31, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80902D24
+    data: '3B030000' # addi r24, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80902D2C
+    data: '3AE00000' # li r23, 0
+
+    # Fix FUN_80902fa0
+
+  - name: DontSetP1PowerupToMario
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80902FC8
+    target_func: 'DontSetP1PowerupToMario'
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x8090302C
+    data: '3BDD0000' # addi r30, r29, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80903030
+    data: '3BA30000' # addi r29, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x80903038
+    data: '3B600000' # li r27, 0
+
+    # Fix FUN_807A0060
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A0088
+    data: '3B830000' # addi r28, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A008C
+    data: '3B600000' # li r27, 0
+
+    # Fix FUN_807A0170
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A0190
+    data: '38830000' # addi r4, r3, 0
+
+  - name: SetFour
+    type: patch
+    addr_pal: 0x807A018C
+    data: '38000004' # li r0, 4
+
+    # Change dNumberOfPeopleChange_c::executeState_InitialSetup
+  
+  - name: ChangePSELBmgForPlayerCount
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807A10C8
+    target_func: 'ChangePSELBmgForPlayerCount'
+
+    # Fix dNumberOfPeopleChange_c::beginState_OnStageAnimeEndWait
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A11F0
+    data: '391F0000' # addi r8, r31, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1204
+    data: '39200000' # li r9, 0
+
+    # Fix dNumberOfPeopleChange_c::beginState_NowEntrantRecruit
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A14D8
+    data: '38C30000' # addi r6, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A14DC
+    data: '38E00000' #li r7, 0
+
+    # Fix dNumberOfPeopleChange_c::executeState_NowEntrantRecruit
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1518
+    data: '38830000' # addi r4, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A152C
+    data: '38050000' # addi r0, r5, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1534
+    data: '2C050000' # cmpwi r5, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1628
+    data: '389F0000' # addi r4, r31, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A162C
+    data: '38030000' # addi r0, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1634
+    data: '2C030000' #cmpwi r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1658
+    data: '38BF0000' # addi r5, r31, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A165C
+    data: '38C00000' # li r6, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A15C8
+    data: '38BF0000' # addi r5, r31, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A15CC
+    data: '38C00000' # li r6, 0
+
+    # Fix dNumberOfPeopleChange_c::beginState_StoryModeCourseSelectExitWait
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A16D8
+    data: '38C30000' # addi r6, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A16DC
+    data: '38E00000' # li r7, 0
+
+    # Fix dNumberOfPeopleChange_c::executeState_StoryModeCourseSelectExitWait
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1718
+    data: '38830000' # addi r4, r3, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A172C
+    data: '38050000' # addi r0, r5, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A1734
+    data: '2C050000' # cmpwi r5, 0
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A17AC
+    data: '38BF0000' # addi r5, r31, 4
+
+  - name: SetZero
+    type: patch
+    addr_pal: 0x807A17B0
+    data: '38C00000' # li r6, 0
+
+    # Don't force set P1 mario position
+
+  - name: DontForceSetP1MarioPos1
+    type: nop_insn
+    area_pal: 0x807A068C
+
+  - name: DontForceSetP1MarioPos2
+    type: nop_insn
+    area_pal: 0x807A0694
+
+  - name: DontForceSetP1MarioPos3
+    type: nop_insn
+    area_pal: 0x807A069C
+
+    # Don't make Mario automatically registered
+
+  - name: DontAutomaticallyRegisterMario1
+    type: patch
+    addr_pal: 0x80918B28
+    data: '38000000' # li r0, 0
+
+  - name: DontAutomaticallyRegisterMario2
+    type: patch
+    addr_pal: 0x800BB1B4
+    data: '90E30384' # stw r7, 0x384(r3)
+
+    # Allow player 1 to register
+
+  - name: AllowP1ToRegister
+    type: nop_insn
+    area_pal: 0x807A0FE8
+
+    # Prevent cancelling Add/Drop players when player 1 is not registered
+
+  - name: CancelAddDropCheckPlayer1
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807A0D24
+    target_func: 'CancelAddDropCheckPlayer1'
+
+    # For pressing 2 in an inappropiate time at the World Map
+
+  - name: CancelAddDropFix
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807A0D40
+    target_func: 'CancelAddDropFix'
+
+    # For pressing 1 in an inappropiate time in the Main Menu
+
+  - name: CancelAfterRegisteredFix
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807A0D68
+    target_func: 'CancelAfterRegisteredFix'
+
+    # Disable preventing 2D Mario from jumping here
+
+  - name: Prevent2DMarioFromJumping
+    type: nop_insn
+    area_pal: 0x807A12A8
+
+    # Prevent 2D player 1 from jumping here
+
+  - name: PreventJumpOnWM
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x808C5DFC
+    target_func: 'PreventJumpOnWM'
+
+    # Allow selecting Mario
+
+  - name: AllowSelectingMario
+    type: patch
+    addr_pal: 0x80770A8C
+    data: '2C030004' # cmpwi r3, 4
+
+    # Remove Mario's "here we go"
+
+  - name: RemoveMarioHereWeGo
+    type: patch
+    addr_pal: 0x807AC8CC
+    data: '38000001' # li r0, 1
+
+    # Don't skip character select with 1 player
+
+  - name: DontSkipCharSelectWithP1
+    type: nop_insn
+    area_pal: 0x80918B50
+
+    # Fix arrows
+
+  - name: FixArrows1
+    type: patch
+    addr_pal: 0x8076E630
+    data: '2C000004' # cmpwi r0, 4
+
+  - name: FixArrows2
+    type: patch
+    addr_pal: 0x8076EAB8
+    data: '2C030004' # cmpwi r3, 4
+
+    # Fix 2 button not glowing for P1
+
+  - name: Fix2ButtonNotGlowingForP1
+    type: nop_insn
+    area_pal: 0x8076DDE8
+
+    # Fix in use select
+
+  - name: FixInUseSelect1
+    type: patch
+    addr_pal: 0x80770988
+    data: '5400173A' # rlwinm r0, r0, 2, 0xC
+
+  - name: FixInUseSelect2
+    type: nop_insn
+    area_pal: 0x807709A8
+
+  - name: FixInUseSelect3
+    type: patch
+    addr_pal: 0x807709B0
+    data: '540407FE' # rlwinm r4, r0, 0, 1
+
+    # Similar fixes
+
+  - name: SimilarFixes
+    type: patch
+    addr_pal: 0x8076FE4C
+    data: '5400173A' # rlwinm r0, r0, 2, 0xC
+
+    # Fix default selection for Mario
+
+  - name: CharacterChangeSelectBase_FixDefaultSelection
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8076FF0C
+    target_func: 'CharacterChangeSelectBase_FixDefaultSelection'
+
+  - name: CharacterChangeSelectBase_FixDefaultSelection2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8076FE84
+    target_func: 'CharacterChangeSelectBase_FixDefaultSelection2'
+
+    # Fix Mario's voice on select
+
+  - name: CharacterChangeSelectBase_FixMarioVoice
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8077117C
+    target_func: 'CharacterChangeSelectBase_FixMarioVoice'
+
+  - name: CharacterChangeSelectBase_FixMarioVoiceMini
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80771164
+    target_func: 'CharacterChangeSelectBase_FixMarioVoiceMini'
+
+    # Change Mario icon
+
+  - name: CharacterChangeSelectBase_FixInUseCheck
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8076FDC4
+    target_func: 'CharacterChangeSelectBase_FixInUseCheck'
+
+  - name: CharacterChangeSelectBase_FixInUseCheck2
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8076FDD4
+    target_func: 'CharacterChangeSelectBase_FixInUseCheck2'
+
+  - name: ExpandCharacterChangeSelectContents
+    type: patch
+    addr_pal: 0x80772A58
+    data: '386002C0' # li r3, 0x2C0
+
+  - name: CharacterChangeSelectContents_GrabMarioIconPanes
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x80772EDC
+    target_func: 'CharacterChangeSelectContents_GrabMarioIconPanes'
+
+  - name: CharacterChangeSelectContents_MakeMarioIconPanesInvisible
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x807733C0
+    target_func: 'CharacterChangeSelectContents_MakeMarioIconPanesInvisible'
+
+    # Read array differently
+
+  - name: ReadArrayDifferently1
+    type: patch
+    addr_pal: 0x8076FD8C
+    data: '7FE628AE' # lbzx r31, r6, r5
+
+  - name: CharacterChangeSelectBase_ExpandIconArray
+    type: patch
+    addr_pal: 0x80933CF0
+    data: '0600010207'
+
+  - name: CharacterChangeSelectBase_FixIconUpdate
+    type: branch_insn
+    branch_type: b
+    src_addr_pal: 0x8077359C
+    target_func: 'CharacterChangeSelectBase_FixIconUpdate'

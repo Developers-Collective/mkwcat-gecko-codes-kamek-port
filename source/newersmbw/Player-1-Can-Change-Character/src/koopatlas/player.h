@@ -15,6 +15,8 @@ class daWMPlayer_c : public dActor_c {
 		int onExecute();
 		int onDraw();
 
+		void setupModel();
+
 		int currentAnim;
 		float currentFrame;
 		float currentUnk;
@@ -48,7 +50,9 @@ class daWMPlayer_c : public dActor_c {
 		m3d::anmTexPat_c pats[4];
 		void bindPats();
 
+		void refreshPlayerModel();
 		void startAnimation(int id, float frame, float unk, float updateRate);
+
 
 		static daWMPlayer_c *build();
 		static daWMPlayer_c *instance;

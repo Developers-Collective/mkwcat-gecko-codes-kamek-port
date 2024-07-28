@@ -469,7 +469,8 @@ void dWMStarCoin_c::executeState_Wait() {
 		if (!enableHardMode) {
 			enableHardMode = true;
 			OSReport("Hard Mode enabled!\n");
-			MapSoundPlayer(SoundRelatedClass, SE_VOC_MA_CS_COURSE_IN_HARD, 1);
+			SFX courseHardSFX[] = {SE_VOC_MA_CS_COURSE_IN_HARD, SE_VOC_LU_CS_COURSE_IN_HARD, SE_VOC_KO_CS_COURSE_IN_HARD, SE_VOC_KO2_CS_COURSE_IN_HARD};
+			MapSoundPlayer(SoundRelatedClass, courseHardSFX[Player_ID[0]], 1);
 			showSecretMessage(L"Hard Mode", linesOn, lineCountOn);
 		} else {
 			enableHardMode = false;

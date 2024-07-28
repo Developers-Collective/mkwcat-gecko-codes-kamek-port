@@ -8,6 +8,7 @@ class dKPMusic {
 		static void execute();
 		static void stop();
 		static void playStarMusic();
+		static void stopStarMusic();
 };
 
 #endif /* MAPMUSIC_H */
